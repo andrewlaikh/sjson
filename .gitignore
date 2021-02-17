@@ -5,6 +5,7 @@
 *.swn
 *.swo
 *.DS_Store
+*.idea
 
 # sbt specific
 .cache/

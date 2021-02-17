@@ -29,7 +29,9 @@ class TokenParseTest extends org.scalatest.FunSuite {
   }
 
   test("toTokens: single string") {
-    List(s"""""""", s""""hello, world"""", s""""123"""", s""""\\""""", s""""\n"""", s""""\t"""", s""""\\\\"""").map((txt) => {
+    List(s"""""""", s""""hello, world"""", s""""123"""", s""""\\""""",
+      s""""\\n"""", s""""\t"""", s""""\\\\"""", s""""\\r"""", s""""\\b"""",
+      s""""\\f"""", s""""\\/"""").map((txt) => {
       testToToken(txt, List(JSONToken(JSONToken.STRING, txt)))
     })
   }
@@ -52,12 +54,12 @@ class TokenParseTest extends org.scalatest.FunSuite {
 
   test("toTokens: object") {
     testToToken("{}", List(JSONToken(JSONToken.LEFT_BRACKET, "{", 0), JSONToken(JSONToken.RIGHT_BRACKET, "}", 1)))
-    testToToken(s"""{"a": 1}""", List(JSONToken(JSONToken.LEFT_BRACKET, "{", 0), 
+    testToToken(s"""{"a": 1}""", List(JSONToken(JSONToken.LEFT_BRACKET, "{", 0),
       JSONToken(JSONToken.STRING, "\"a\"", 1),
       JSONToken(JSONToken.COLON, ":", 4),
       JSONToken(JSONToken.NUMBER, "1", 6),
       JSONToken(JSONToken.RIGHT_BRACKET, "}", 7)))
-    testToToken(s"""{"a": 1, "b": null}""", List(JSONToken(JSONToken.LEFT_BRACKET, "{", 0), 
+    testToToken(s"""{"a": 1, "b": null}""", List(JSONToken(JSONToken.LEFT_BRACKET, "{", 0),
       JSONToken(JSONToken.STRING, "\"a\"", 1),
       JSONToken(JSONToken.COLON, ":", 4),
       JSONToken(JSONToken.NUMBER, "1", 6),
