@@ -1,4 +1,4 @@
-package io.github.free.lock.sjson
+package org.andrewlaikh.sjson
 
 import reflect.runtime.universe._
 

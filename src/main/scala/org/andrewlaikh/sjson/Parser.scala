@@ -1,4 +1,4 @@
-package io.github.free.lock.sjson
+package org.andrewlaikh.sjson
 
 import scala.collection.mutable.ListBuffer
 import scala.collection.mutable.Stack

@@ -1,4 +1,4 @@
-package io.github.free.lock.sjson
+package org.andrewlaikh.sjson
 
 class AsyncIteratorTest extends org.scalatest.FunSuite {
   private def sumIter(iter: AsyncIterator[Int],

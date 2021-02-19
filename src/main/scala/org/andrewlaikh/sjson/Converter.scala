@@ -1,4 +1,4 @@
-package io.github.free.lock.sjson
+package org.andrewlaikh.sjson
 
 import scala.reflect._
 import scala.reflect.runtime.universe._

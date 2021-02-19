@@ -1,4 +1,4 @@
-package io.github.free.lock.sjson
+package org.andrewlaikh.sjson
 
 import scala.collection.mutable.Queue
 import scala.collection.mutable.ListBuffer
