@@ -1,4 +1,4 @@
-package io.github.free.lock.sjson
+import io.github.andrewlaikh.sjson.{JSONParser, JSONToken}
 
 class ParseTokenTest extends org.scalatest.FunSuite {
   test("parseTokens") {

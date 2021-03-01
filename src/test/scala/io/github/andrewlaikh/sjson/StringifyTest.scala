@@ -1,4 +1,4 @@
-package io.github.free.lock.sjson
+import io.github.andrewlaikh.sjson.JSON
 
 class stringifyTest extends org.scalatest.FunSuite {
   test("stringify: string1") {

@@ -1,4 +1,4 @@
-package io.github.free.lock.sjson
+package io.github.andrewlaikh.sjson
 
 object JSONUtil {
   import scala.reflect._

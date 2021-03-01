@@ -1,5 +1,4 @@
-package io.github.free.lock.sjson
-
+import io.github.andrewlaikh.sjson.{JSONToken, TokenParser, AsyncIterator}
 import scala.collection.mutable.ListBuffer
 
 class TokenParseTest extends org.scalatest.FunSuite {

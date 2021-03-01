@@ -1,5 +1,6 @@
-package io.github.free.lock.sjson
+package io.github.andrewlaikh.sjson
 
+import io.github.andrewlaikh.sjson.{JSON, PathNode, AsyncIterator, JSONConverter}
 import scala.collection.mutable.ListBuffer
 
 case class User(name: String, email: String)

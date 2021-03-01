@@ -1,7 +1,7 @@
 name := "sjson"
 organization := "io.github.andrewlaikh"
 version := "0.2.2"
-scalaVersion := "2.12.4"
+scalaVersion := "2.12.11"
 
 useGpg := true
 parallelExecution in Test := true

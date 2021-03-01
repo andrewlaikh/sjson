@@ -38,8 +38,7 @@ JSON library for Scala
 
 ```scala
 package io.github.free.lock.json.example
-
-import io.github.free.lock.sjson.JSON
+import io.github.andrewlaikh.sjson.JSON
 
 case class User(name: String, age: Int)
 
@@ -111,8 +110,7 @@ scala.collection.immutable.Map[_, _\] | object
 other class | object (field name -> field value)
 
 ```scala
-import io.github.free.lock.sjson.JSON
-
+import io.github.andrewlaikh.sjson.JSON
 // case class
 case class User(name: String, age: Int)
 
@@ -194,7 +192,8 @@ Nothing | Null
 ## Streaming example
 
 ```scala
-import io.github.free.lock.sjson.{JSON, AsyncIterator}
+import io.github.andrewlaikh.sjson.JSON
+import io.github.free.lock.sjson.AsyncIterator
 
 val textIter = new AsyncIterator[Char]()
 
