@@ -1,4 +1,4 @@
-import io.github.andrewlaikh.sjson.JSONUtil
+package io.github.free.lock.sjson
 
 class JSONUtilTest extends org.scalatest.FunSuite {
   test("unescapeString") {

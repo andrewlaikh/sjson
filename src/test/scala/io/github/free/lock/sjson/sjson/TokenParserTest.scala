@@ -1,4 +1,5 @@
-import io.github.andrewlaikh.sjson.{JSONToken, TokenParser, AsyncIterator}
+package io.github.free.lock.sjson
+
 import scala.collection.mutable.ListBuffer
 
 class TokenParseTest extends org.scalatest.FunSuite {
@@ -53,12 +54,12 @@ class TokenParseTest extends org.scalatest.FunSuite {
 
   test("toTokens: object") {
     testToToken("{}", List(JSONToken(JSONToken.LEFT_BRACKET, "{", 0), JSONToken(JSONToken.RIGHT_BRACKET, "}", 1)))
-    testToToken(s"""{"a": 1}""", List(JSONToken(JSONToken.LEFT_BRACKET, "{", 0),
+    testToToken(s"""{"a": 1}""", List(JSONToken(JSONToken.LEFT_BRACKET, "{", 0), 
       JSONToken(JSONToken.STRING, "\"a\"", 1),
       JSONToken(JSONToken.COLON, ":", 4),
       JSONToken(JSONToken.NUMBER, "1", 6),
       JSONToken(JSONToken.RIGHT_BRACKET, "}", 7)))
-    testToToken(s"""{"a": 1, "b": null}""", List(JSONToken(JSONToken.LEFT_BRACKET, "{", 0),
+    testToToken(s"""{"a": 1, "b": null}""", List(JSONToken(JSONToken.LEFT_BRACKET, "{", 0), 
       JSONToken(JSONToken.STRING, "\"a\"", 1),
       JSONToken(JSONToken.COLON, ":", 4),
       JSONToken(JSONToken.NUMBER, "1", 6),

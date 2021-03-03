@@ -1,6 +1,4 @@
-package io.github.andrewlaikh.sjson
-
-import io.github.andrewlaikh.sjson.JSON
+package io.github.free.lock.sjson
 
 class ErrorJSONTest extends org.scalatest.FunSuite {
   test("tokenParser: string end up with \\") {

@@ -1,4 +1,4 @@
-package io.github.andrewlaikh.sjson
+package io.github.free.lock.sjson
 
 object JSONUtil {
   import scala.reflect._
@@ -110,6 +110,16 @@ object JSONUtil {
     s""""${txtBuilder.toString()}""""
   }
 
+  def isUnicode(txt: String, pos: Int): Boolean = {
+    val txtLen = txt.length - 1
+    if (pos + 6 > txtLen) return false
+    //start iterating from /uD835 first hexadecimal character ('D' in this case)
+    val hexString = txt.substring(pos + 2, pos + 6)
+    val hexStringRegex = """[0-9a-fA-F]{4}"""
+    if(hexString.matches(hexStringRegex)) return true
+    false
+  }
+
   def unescapeString(txt: String): String = {
     val txtBuilder = new StringBuilder // use txt builder to collect text
 
@@ -129,9 +139,20 @@ object JSONUtil {
           case 'u' => 'u'
           case _   => next
         }
-        if(newChar == 'u') txtBuilder.append('\\')
-        txtBuilder.append(newChar)
-        i += 2
+        if(newChar == 'u' && isUnicode(txt, i)) {
+          val unicodeString = s"\\u${txt.substring(i + 2, i + 6)}"
+          val unicodeChar = Integer.parseInt(unicodeString.drop(2), 16).toChar
+          txtBuilder.append(unicodeChar)
+          i += 6
+        }
+        else if (newChar == 'u') {
+          txtBuilder.append("\\u")
+          i += 2
+        }
+        else {
+          txtBuilder.append(newChar)
+          i += 2
+        }
       } else {
         txtBuilder.append(ch)
         i += 1

@@ -1,6 +1,5 @@
-package io.github.andrewlaikh.sjson
+package io.github.free.lock.sjson
 
-import io.github.andrewlaikh.sjson.{JSON, PathNode, AsyncIterator, JSONConverter}
 import scala.collection.mutable.ListBuffer
 
 case class User(name: String, email: String)
@@ -23,6 +22,26 @@ class ParseTest extends org.scalatest.FunSuite {
     val input = "[{\"\\uD83\":\"\\uD83\"}]"
     val output = JSON.parse(input).asInstanceOf[List[Map[String, String]]](0)("\\uD83")
     assert(output ==  "\\uD83")
+  }
+
+  test("parse: map unicode3") {
+    val input = "[{\"\\uD835\\uDC07\":\"\\uD835\\uDC07\"}]"
+    //𝐇
+    val output = JSON.parse(input).asInstanceOf[List[Map[String, String]]](0)("\uD835\uDC07")
+    assert(output ==  "\uD835\uDC07")
+  }
+
+  test("parse: map unicode4") {
+    val input = "[{\"シリアライゼーション\":\"シリアライゼーション\"}]"
+    val output = JSON.parse(input).asInstanceOf[List[Map[String, String]]](0)("シリアライゼーション")
+    assert(output ==  "シリアライゼーション")
+  }
+
+  test("parse: map unicode5") {
+    val input = "[{\"\\uD835\\uDC07\":\"\\uD835\\uDC07\"}]"
+    //𝐇
+    val output = JSON.parse(input).asInstanceOf[List[Map[String, String]]](0)("\uD835\uDC07")
+    assert(output ==  "\uD835\uDC07")
   }
 
   test("parse: true|false|null") {
