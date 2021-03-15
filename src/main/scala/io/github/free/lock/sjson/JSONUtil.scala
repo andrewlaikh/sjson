@@ -111,17 +111,16 @@ object JSONUtil {
   }
 
   def uniCodeArrayBuilder(txt: String): Array[Boolean] = {
-    val textLen = txt.length
     val unicodeArray = new Array[Boolean](txt.length)
     val (allStringHexaDecimal, startPos) = (4, 3)
     var (hexadecimalCount, startPtr) = (0, 0)
     for (endPtr ← startPos to unicodeArray.length -  1){
-      startPtr = endPtr - 3
+      startPtr = endPtr - 4
       if(txt.charAt(endPtr).isDigit || isHexAlphabet(txt.charAt(endPtr))) hexadecimalCount = hexadecimalCount + 1
       //startPtr starts from first possible hexadecimal character (e.g. 8 in "\uD835) that needs to be removed
       //in a sliding window
-      if(startPtr > 3 && (txt.charAt(startPtr).isDigit || isHexAlphabet(txt.charAt(startPtr)))) hexadecimalCount = hexadecimalCount - 1
-      if(hexadecimalCount == allStringHexaDecimal) unicodeArray.update(startPtr - 2, true)
+      if(startPtr >= 3 && (txt.charAt(startPtr).isDigit || isHexAlphabet(txt.charAt(startPtr))))  hexadecimalCount = hexadecimalCount - 1
+      if(hexadecimalCount == allStringHexaDecimal) unicodeArray.update(startPtr - 1, true)
     }
     unicodeArray
   }

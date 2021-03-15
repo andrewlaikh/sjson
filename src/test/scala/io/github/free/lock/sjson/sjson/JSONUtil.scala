@@ -1,5 +1,7 @@
 package io.github.free.lock.sjson
 
+import org.scalatest.Matchers.{convertToAnyShouldWrapper, equal}
+
 class JSONUtilTest extends org.scalatest.FunSuite {
   test("unescapeString") {
     assert(JSONUtil.unescapeString(JSONUtil.escapeString("1234")) == "1234")
@@ -11,7 +13,24 @@ class JSONUtilTest extends org.scalatest.FunSuite {
     assert(JSONUtil.unescapeString(JSONUtil.escapeString("12\\34")) == "12\\34")
   }
 
-  test("unicodeArrayBuilder"){
-//    assert(JSONUtil.uniCodeArrayBuilder(""))
+  test("unicodeArrayBuilderSimple"){
+    val currString = "\"\\uD835\\uD83\""
+    val unicodeArray = new Array[Boolean](currString.length)
+    unicodeArray.update(1, true)
+    JSONUtil.uniCodeArrayBuilder(currString) should equal (unicodeArray)
+  }
+
+  test("unicodeArrayBuilderWithInvalidUniCodeInBetween"){
+    val currString = "\"\\uD835\\uD83\\uD835\""
+    val unicodeArray = new Array[Boolean](currString.length)
+    unicodeArray.update(1, true)
+    unicodeArray.update(12, true)
+    JSONUtil.uniCodeArrayBuilder(currString) should equal (unicodeArray)
+  }
+
+  test("unicodeArrayNoUnicode"){
+    val currString = "\"\\uD83za\\uD83zxd\""
+    val unicodeArray = new Array[Boolean](currString.length)
+    JSONUtil.uniCodeArrayBuilder(currString) should equal (unicodeArray)
   }
 }

@@ -38,9 +38,9 @@ class ParseTest extends org.scalatest.FunSuite {
   }
 
   test("parse: map unicode5") {
-    val input = "[{\"\\uD835\\uDC07\":\"\\uD835\\uDC07\"}]"
+    val input = "[{\"\\uDC\\uD835\\uDC07\\uDC\":\"\\uD835\\uDC07\"}]"
     //𝐇
-    val output = JSON.parse(input).asInstanceOf[List[Map[String, String]]](0)("\uD835\uDC07")
+    val output = JSON.parse(input).asInstanceOf[List[Map[String, String]]](0)("\\uDC\uD835\uDC07\\uDC")
     assert(output ==  "\uD835\uDC07")
   }
 
