@@ -10,4 +10,8 @@ class JSONUtilTest extends org.scalatest.FunSuite {
     assert(JSONUtil.unescapeString(JSONUtil.escapeString("12\f34")) == "12\f34")
     assert(JSONUtil.unescapeString(JSONUtil.escapeString("12\\34")) == "12\\34")
   }
+
+  test("unicodeArrayBuilder"){
+//    assert(JSONUtil.uniCodeArrayBuilder(""))
+  }
 }

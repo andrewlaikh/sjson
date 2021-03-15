@@ -110,18 +110,30 @@ object JSONUtil {
     s""""${txtBuilder.toString()}""""
   }
 
-  def isUnicode(txt: String, pos: Int): Boolean = {
-    val txtLen = txt.length - 1
-    if (pos + 6 > txtLen) return false
-    //start iterating from /uD835 first hexadecimal character ('D' in this case)
-    val hexString = txt.substring(pos + 2, pos + 6)
-    val hexStringRegex = """[0-9a-fA-F]{4}"""
-    if(hexString.matches(hexStringRegex)) return true
+  def uniCodeArrayBuilder(txt: String): Array[Boolean] = {
+    val textLen = txt.length
+    val unicodeArray = new Array[Boolean](txt.length)
+    val (allStringHexaDecimal, startPos) = (4, 3)
+    var (hexadecimalCount, startPtr) = (0, 0)
+    for (endPtr ← startPos to unicodeArray.length -  1){
+      startPtr = endPtr - 3
+      if(txt.charAt(endPtr).isDigit || isHexAlphabet(txt.charAt(endPtr))) hexadecimalCount = hexadecimalCount + 1
+      //startPtr starts from first possible hexadecimal character (e.g. 8 in "\uD835) that needs to be removed
+      //in a sliding window
+      if(startPtr > 3 && (txt.charAt(startPtr).isDigit || isHexAlphabet(txt.charAt(startPtr)))) hexadecimalCount = hexadecimalCount - 1
+      if(hexadecimalCount == allStringHexaDecimal) unicodeArray.update(startPtr - 2, true)
+    }
+    unicodeArray
+  }
+
+  def isHexAlphabet(ch: Character): Boolean = {
+    if(ch >= 'A' && ch <= 'F') return true
     false
   }
 
   def unescapeString(txt: String): String = {
     val txtBuilder = new StringBuilder // use txt builder to collect text
+    val uniCodeArray = uniCodeArrayBuilder(txt)
 
     var i   = 1
     var len = txt.length - 1
@@ -139,7 +151,7 @@ object JSONUtil {
           case 'u' => 'u'
           case _   => next
         }
-        if(newChar == 'u' && isUnicode(txt, i)) {
+        if(newChar == 'u' && uniCodeArray(i)) {
           val unicodeString = s"\\u${txt.substring(i + 2, i + 6)}"
           val unicodeChar = Integer.parseInt(unicodeString.drop(2), 16).toChar
           txtBuilder.append(unicodeChar)
