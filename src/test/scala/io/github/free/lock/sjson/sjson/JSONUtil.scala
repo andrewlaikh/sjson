@@ -20,6 +20,15 @@ class JSONUtilTest extends org.scalatest.FunSuite {
     JSONUtil.uniCodeArrayBuilder(currString) should equal (unicodeArray)
   }
 
+  test("unicodeArrayBuilderWithInvalidUniCodeInBetween2"){
+    val currString = "\"\\uD835\\uD835\\uD83\\uDC07\""
+    val unicodeArray = new Array[Boolean](currString.length)
+    unicodeArray.update(1, true)
+    unicodeArray.update(7, true)
+    unicodeArray.update(18, true)
+    JSONUtil.uniCodeArrayBuilder(currString) should equal (unicodeArray)
+  }
+
   test("unicodeArrayBuilderWithInvalidUniCodeInBetween"){
     val currString = "\"\\uD835\\uD83\\uD835\""
     val unicodeArray = new Array[Boolean](currString.length)
